@@ -1,0 +1,24 @@
+SUM26_MaLop_NhomX_RBL_TenDeTai/
+├── 00_README_HuongDan_RBL_Checkpoint_Slot2_4_6_SUM26.docx
+├── 01_Slot2_Research_Proposal/
+│   ├── 01_Template_RBL_Slot2_ResearchProposal_MentorReview.docx
+│   ├── Slot2_QuickReport_Slides.pdf/pptx
+│   └── Evidence_RQ_Source_Method_Initial/
+├── 02_Slot4_Literature_Method/
+│   ├── 02_Template_RBL_Slot4_Literature_Method_MentorReview.docx
+│   ├── Source_Log.xlsx/pdf
+│   ├── Synthesis_Matrix.xlsx/pdf
+│   ├── Method_Note.docx/pdf
+│   └── Slot4_QuickReport_Slides.pdf/pptx
+├── 03_Slot6_Findings_PAAL/
+│   ├── 03_Template_RBL_Slot6_Findings_PAAL_MentorReview.docx
+│   ├── Preliminary_Findings.docx/pdf
+│   ├── PAAL_StruggleLog.xlsx/pdf
+│   ├── AI_Declaration_Draft.xlsx/pdf
+│   ├── Evidence_Data_Source/
+│   └── Slot6_QuickReport_Slides.pdf/pptx
+├── 04_QuickReport_Slides_Outline/
+│   └── 04_Template_RBL_QuickReport_Slides_Outline.docx
+├── 05_Workbook_Master/
+│   └── RBL_Checkpoint_Master_Slot2_4_6_SUM26.xlsx
+└── 99_Final_Backup/
