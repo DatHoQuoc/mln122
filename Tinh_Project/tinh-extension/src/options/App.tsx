@@ -10,7 +10,9 @@ export function App() {
   const [s, setS] = useState<Settings | null>(null);
 
   const load = () =>
-    void sendMessage<{ settings: Settings }>({ type: 'GET_STATE' }).then((r) => setS(r.settings));
+    void sendMessage<{ settings: Settings }>({ type: 'GET_STATE' }).then(
+      (r) => r && setS(r.settings),
+    );
 
   useEffect(load, []);
 

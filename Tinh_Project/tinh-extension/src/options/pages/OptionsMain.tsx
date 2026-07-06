@@ -22,7 +22,9 @@ export function OptionsMain() {
   const [data, setData] = useState<StorageShape | null>(null);
 
   useEffect(() => {
-    void sendMessage<{ settings: Settings }>({ type: 'GET_STATE' }).then((r) => setS(r.settings));
+    void sendMessage<{ settings: Settings }>({ type: 'GET_STATE' }).then(
+      (r) => r && setS(r.settings),
+    );
     void Promise.all([
       get('settings'),
       get('pauseEvents'),

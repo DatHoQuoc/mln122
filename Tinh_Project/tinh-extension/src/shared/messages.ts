@@ -32,7 +32,15 @@ export type ExtMessage =
 
 export type MessageType = ExtMessage['type'];
 
-/** Gửi message có type an toàn. */
-export function sendMessage<T = unknown>(msg: ExtMessage): Promise<T> {
-  return chrome.runtime.sendMessage(msg) as Promise<T>;
+/**
+ * Gửi message có type an toàn. Nuốt lỗi "Extension context invalidated" —
+ * xảy ra vô hại khi tab cũ vẫn mở content script sau khi extension được
+ * reload (chưa F5 lại tab); không phải lỗi logic, không cần báo người dùng.
+ */
+export function sendMessage<T = unknown>(msg: ExtMessage): Promise<T | undefined> {
+  try {
+    return (chrome.runtime.sendMessage(msg) as Promise<T>).catch(() => undefined);
+  } catch {
+    return Promise.resolve(undefined);
+  }
 }

@@ -8,7 +8,7 @@ export function SettingsPage() {
   const [s, setS] = useState<Settings | null>(null);
 
   useEffect(() => {
-    sendMessage<{ settings: Settings }>({ type: 'GET_STATE' }).then((r) => setS(r.settings));
+    sendMessage<{ settings: Settings }>({ type: 'GET_STATE' }).then((r) => r && setS(r.settings));
   }, []);
 
   if (!s) return <p className="tinh-muted">Đang tải…</p>;

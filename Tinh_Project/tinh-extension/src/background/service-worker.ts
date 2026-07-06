@@ -14,14 +14,32 @@ registerNotificationClicks();
 
 const tracker = new SessionTracker();
 const IDLE_ALARM = 'idle-check';
+const PLATFORM_URL_PATTERNS = ['*://*.youtube.com/*', '*://*.facebook.com/*', '*://*.tiktok.com/*'];
 
 function ensureAlarms() {
   chrome.alarms.create(IDLE_ALARM, { periodInMinutes: 5 });
 }
 
+/**
+ * Tab MXH đã mở TRƯỚC khi cài/cập nhật extension không tự có content script
+ * (Chrome không tiêm ngược vào tab đang mở). Tự tải lại các tab đó ngay sau
+ * install/update để mọi thứ "tự chạy ngầm" mà người dùng không phải F5 tay.
+ */
+async function refreshOpenPlatformTabs(): Promise<void> {
+  try {
+    const tabs = await chrome.tabs.query({ url: PLATFORM_URL_PATTERNS });
+    for (const tab of tabs) {
+      if (tab.id != null) chrome.tabs.reload(tab.id).catch(() => {});
+    }
+  } catch {
+    /* không truy vấn được tab (hiếm) — bỏ qua, không chặn khởi động */
+  }
+}
+
 chrome.runtime.onInstalled.addListener(async () => {
   await ensureMeta(Date.now());
   ensureAlarms();
+  void refreshOpenPlatformTabs();
   console.log('[Tỉnh] onInstalled — meta ready');
 });
 chrome.runtime.onStartup.addListener(ensureAlarms);
