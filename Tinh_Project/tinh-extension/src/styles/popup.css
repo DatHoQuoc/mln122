@@ -105,6 +105,22 @@ body {
   height: 18px;
   accent-color: var(--tinh-accent);
 }
+.tinh-settings .field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tinh-muted.small.hint {
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Chú thích ⓘ cạnh nhãn chỉ số */
+.stat-info {
+  color: var(--tinh-accent);
+  font-size: 11px;
+  cursor: help;
+}
 
 /* Today stats */
 .tinh-stats {

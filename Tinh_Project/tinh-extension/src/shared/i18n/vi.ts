@@ -11,13 +11,24 @@ export const vi = {
     settings: 'Cài đặt',
   },
 
+  // Chú thích ngắn hiện khi rê chuột lên tên tab (giúp người mới hiểu tab làm gì).
+  tabHints: {
+    today: 'Tổng quan thói quen của bạn hôm nay',
+    mirror: '"Gương" — soi xem bạn đang xem tin từ những nguồn nào',
+    journal: 'Ý định bạn đặt trước mỗi phiên và mức bạn giữ được',
+    settings: 'Bật/tắt tính năng và chỉnh ngưỡng nhắc',
+  },
+
   today: {
     title: 'Hôm nay',
     empty:
       'Chưa có hoạt động nào hôm nay. Hãy dùng mạng xã hội như thường lệ — "Tỉnh" sẽ đồng hành.',
-    pauseToday: 'Khoảng dừng hôm nay',
+    pauseToday: 'Số lần được nhắc dừng',
+    pauseTodayHint: 'Số lần "Tỉnh" mời bạn dừng lại vài giây để tự hỏi mình đang muốn gì — trong hôm nay.',
     pauseTotal: 'Tổng khoảng dừng',
-    streak: 'Chuỗi micro-win',
+    streak: 'Chuỗi ngày giữ ý định',
+    streakHint:
+      'Số ngày liên tiếp bạn giữ đúng điều mình đã định làm trước khi vào mạng xã hội (mỗi ngày như vậy là một "micro-win" — chiến thắng nhỏ).',
   },
 
   pause: {
@@ -30,7 +41,11 @@ export const vi = {
 
   mirror: {
     title: 'Gương 7 ngày qua',
+    subtitle:
+      '"Gương" phản chiếu bạn đang xem tin từ những nguồn nào trong 7 ngày, và bao nhiêu phần do BẠN chủ động chọn so với phần THUẬT TOÁN đề xuất. Chỉ đếm tên nguồn, không lưu nội dung.',
     diversity: 'Độ đa dạng nguồn tin',
+    diversityHint:
+      'Điểm 0–1: càng gần 1 nghĩa là bạn xem tin từ nhiều nguồn khác nhau; càng gần 0 nghĩa là bạn đang bị dồn vào một "bong bóng lọc" — chỉ vài nguồn lặp đi lặp lại.',
     views: '{items} lượt xem · {sources} nguồn',
     selfSelected: 'Do bạn chọn',
     recommended: 'Thuật toán đề xuất',
@@ -61,7 +76,8 @@ export const vi = {
     streakLongest: 'Dài nhất',
     keptRatioWeek: 'Giữ đúng ý định (tuần này)',
     recent: 'Phiên gần đây',
-    noSessions: 'Chưa có phiên nào. Đặt ý định khi mở mạng xã hội để bắt đầu tích lũy micro-win.',
+    noSessions:
+      'Chưa có phiên nào. Đặt ý định khi mở mạng xã hội để bắt đầu tích lũy những chiến thắng nhỏ (micro-win).',
     newStreak: 'Bắt đầu chuỗi mới hôm nay?',
     days: 'ngày',
   },
@@ -71,14 +87,30 @@ export const vi = {
   settings: {
     title: 'Cài đặt',
     consent: 'Tham gia nghiên cứu (bật các tính năng)',
-    pauseThreshold: 'Ngưỡng khoảng dừng',
+    consentHint: 'Tắt ô này là dừng toàn bộ tính năng; không tính năng nào chạy khi chưa đồng ý.',
+    pauseThreshold: 'Cuộn liên tục bao lâu thì nhắc dừng',
+    pauseThresholdHint:
+      'Sau chừng này phút cuộn liên tục, "Tỉnh" sẽ hiện câu hỏi mời bạn dừng một nhịp. Kéo cao lên nếu thấy bị nhắc quá thường xuyên.',
     minutesUnit: 'phút',
     featurePause: 'Khoảng dừng phản tư',
+    featurePauseHint:
+      'Cuộn liên tục quá lâu → hiện một câu hỏi ngắn để bạn dừng vài giây, tự hỏi mình đang MUỐN xem gì cụ thể hay chỉ đang THÍCH cảm giác cuộn. Luôn có nút "Tiếp tục".',
     featureMirror: 'Gương bong bóng lọc',
+    featureMirrorHint:
+      'Đếm tên các nguồn (kênh/trang/bạn bè) bạn xem, để bạn thấy mình có đang bị nhốt trong một "bong bóng lọc" hay không. Xem ở tab "Gương".',
     featureJournal: 'Nhật ký chủ thể',
+    featureJournalHint:
+      'Trước mỗi phiên, hỏi bạn định vào để làm gì; sau phiên, đối chiếu xem bạn có làm đúng ý định không.',
     notifications: 'Thông báo đối chiếu',
+    notificationsHint: 'Sau khi kết thúc một phiên, nhắc bạn mở "Tỉnh" để đối chiếu ý định.',
     participantCode: 'Mã tham gia (ẩn danh)',
     reloadHint: 'Đổi cài đặt có hiệu lực ngay; nếu đang mở tab MXH, tải lại trang để chắc chắn.',
+  },
+
+  // Nút nổi "🌙 Tỉnh" trên trang MXH — luôn hiện để mở lại banner đặt ý định.
+  launcher: {
+    label: 'Tỉnh',
+    tooltip: 'Mở "Tỉnh" — đặt ý định cho phiên này',
   },
 
   onboarding: {

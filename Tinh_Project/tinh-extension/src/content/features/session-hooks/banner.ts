@@ -9,8 +9,20 @@ import type { Intention, Platform } from '@shared/types';
 let shown = false;
 const AUTO_HIDE_MS = 20_000;
 
-export function showIntentionBanner(platform: Platform, root: HTMLElement): void {
-  if (shown) return;
+/**
+ * @param force  true khi người dùng chủ động mở lại từ nút nổi 🌙 — gỡ banner cũ (nếu còn)
+ *               rồi hiện lại. Mặc định (đầu phiên) chỉ hiện nếu chưa có banner nào.
+ */
+export function showIntentionBanner(
+  platform: Platform,
+  root: HTMLElement,
+  opts: { force?: boolean } = {},
+): void {
+  if (shown) {
+    if (!opts.force) return;
+    document.getElementById('tinh-intention-host')?.remove();
+    shown = false;
+  }
   shown = true;
 
   const host = document.createElement('div');

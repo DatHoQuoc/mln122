@@ -23,6 +23,8 @@ export function MirrorPage() {
 
   return (
     <div className="tinh-mirror">
+      <p className="tinh-muted small">{vi.mirror.subtitle}</p>
+
       <div className="mirror-filter">
         {(['all', 'youtube', 'facebook', 'tiktok'] as PlatformFilter[]).map((f) => (
           <button key={f} className={filter === f ? 'active' : ''} onClick={() => setFilter(f)}>
@@ -37,7 +39,10 @@ export function MirrorPage() {
         <>
           <div className="diversity">
             <div className="diversity-head">
-              <span>{vi.mirror.diversity}</span>
+              <span title={vi.mirror.diversityHint}>
+                {vi.mirror.diversity}
+                <span className="stat-info" title={vi.mirror.diversityHint}> ⓘ</span>
+              </span>
               <b>{s.entropyNorm.toFixed(2)}</b>
             </div>
             <div className="bar">

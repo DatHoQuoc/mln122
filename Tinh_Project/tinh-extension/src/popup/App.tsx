@@ -20,7 +20,12 @@ export function App() {
 
       <nav className="tinh-tabs">
         {(Object.keys(vi.tabs) as TabKey[]).map((k) => (
-          <button key={k} className={tab === k ? 'active' : ''} onClick={() => setTab(k)}>
+          <button
+            key={k}
+            className={tab === k ? 'active' : ''}
+            title={vi.tabHints[k]}
+            onClick={() => setTab(k)}
+          >
             {vi.tabs[k]}
           </button>
         ))}

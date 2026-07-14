@@ -9,7 +9,9 @@ import { getSettings } from '@shared/storage';
 import { sendMessage } from '@shared/messages';
 import { initPauseFeature } from './features/pause-overlay';
 import { initJournalFeature } from './features/session-hooks';
+import { showIntentionBanner } from './features/session-hooks/banner';
 import { initMirrorFeature } from './features/source-tracker';
+import { initLauncher } from './features/launcher';
 
 function createAdapter(): FeedAdapter | null {
   const platform = detectPlatform(location.host);
@@ -36,6 +38,19 @@ async function main() {
 
   if (settings.journalEnabled) {
     void initJournalFeature(adapter);
+
+    // Nút nổi 🌙 luôn hiện: mở lại banner đặt ý định bất cứ lúc nào, không cần
+    // restart trình duyệt. Bấm nút → đảm bảo có phiên hiện tại rồi hiện banner.
+    initLauncher(() => {
+      void (async () => {
+        await sendMessage({ type: 'SESSION_START', platform: adapter.platform });
+        showIntentionBanner(adapter.platform, adapter.getOverlayRoot(), { force: true });
+      })();
+    });
+
+    // SPA (FB/YT/TikTok) chuyển trang mà không tải lại → content script không chạy lại.
+    // Bắt đổi URL để kiểm tra lại vòng đời phiên (worker tự chống lặp banner).
+    onSpaNavigation(() => void initJournalFeature(adapter));
   }
 
   if (settings.mirrorEnabled) {
@@ -48,6 +63,27 @@ async function main() {
       void sendMessage({ type: 'SCROLL_ACTIVITY', platform: adapter.platform });
     }
   });
+}
+
+/** Gọi cb mỗi khi URL đổi trong SPA (pushState/replaceState/popstate + fallback polling). */
+function onSpaNavigation(cb: () => void): void {
+  let last = location.href;
+  const check = () => {
+    if (location.href !== last) {
+      last = location.href;
+      cb();
+    }
+  };
+  for (const name of ['pushState', 'replaceState'] as const) {
+    const orig = history[name];
+    history[name] = function (this: History, ...args: Parameters<typeof orig>) {
+      const r = orig.apply(this, args);
+      check();
+      return r;
+    };
+  }
+  window.addEventListener('popstate', check);
+  window.setInterval(check, 2000); // fallback cho SPA không dùng history API chuẩn
 }
 
 void main();

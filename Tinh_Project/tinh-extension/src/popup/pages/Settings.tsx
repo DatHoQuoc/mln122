@@ -20,46 +20,56 @@ export function SettingsPage() {
 
   return (
     <div className="tinh-settings">
-      <label className="row">
-        <span>{vi.settings.consent}</span>
-        <input
-          type="checkbox"
-          checked={s.consentGiven}
-          onChange={(e) => update({ consentGiven: e.target.checked })}
-        />
-      </label>
+      <div className="field">
+        <label className="row">
+          <span>{vi.settings.consent}</span>
+          <input
+            type="checkbox"
+            checked={s.consentGiven}
+            onChange={(e) => update({ consentGiven: e.target.checked })}
+          />
+        </label>
+        <p className="tinh-muted small hint">{vi.settings.consentHint}</p>
+      </div>
 
-      <div className="row col">
-        <span>
-          {vi.settings.pauseThreshold}: <b>{s.pauseThresholdMinutes}</b> {vi.settings.minutesUnit}
-        </span>
-        <input
-          type="range"
-          min={1}
-          max={60}
-          step={1}
-          value={s.pauseThresholdMinutes}
-          onChange={(e) => update({ pauseThresholdMinutes: Number(e.target.value) })}
-        />
+      <div className="field">
+        <div className="row col">
+          <span>
+            {vi.settings.pauseThreshold}: <b>{s.pauseThresholdMinutes}</b> {vi.settings.minutesUnit}
+          </span>
+          <input
+            type="range"
+            min={1}
+            max={60}
+            step={1}
+            value={s.pauseThresholdMinutes}
+            onChange={(e) => update({ pauseThresholdMinutes: Number(e.target.value) })}
+          />
+        </div>
+        <p className="tinh-muted small hint">{vi.settings.pauseThresholdHint}</p>
       </div>
 
       <Toggle
         label={vi.settings.featurePause}
+        hint={vi.settings.featurePauseHint}
         checked={s.pauseEnabled}
         onChange={(v) => update({ pauseEnabled: v })}
       />
       <Toggle
         label={vi.settings.featureMirror}
+        hint={vi.settings.featureMirrorHint}
         checked={s.mirrorEnabled}
         onChange={(v) => update({ mirrorEnabled: v })}
       />
       <Toggle
         label={vi.settings.featureJournal}
+        hint={vi.settings.featureJournalHint}
         checked={s.journalEnabled}
         onChange={(v) => update({ journalEnabled: v })}
       />
       <Toggle
         label={vi.settings.notifications}
+        hint={vi.settings.notificationsHint}
         checked={s.journalNotifications}
         onChange={(v) => update({ journalNotifications: v })}
       />
@@ -81,17 +91,22 @@ export function SettingsPage() {
 
 function Toggle({
   label,
+  hint,
   checked,
   onChange,
 }: {
   label: string;
+  hint?: string;
   checked: boolean;
   onChange: (v: boolean) => void;
 }) {
   return (
-    <label className="row">
-      <span>{label}</span>
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
-    </label>
+    <div className="field">
+      <label className="row">
+        <span>{label}</span>
+        <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
+      </label>
+      {hint && <p className="tinh-muted small hint">{hint}</p>}
+    </div>
   );
 }

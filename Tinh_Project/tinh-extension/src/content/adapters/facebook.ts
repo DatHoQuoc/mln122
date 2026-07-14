@@ -23,13 +23,46 @@ const RECOMMENDED_MARKERS = [
   'reels và video ngắn',
 ];
 
-/** Tên actor của bài viết: link trong header (h2/h3/h4 hoặc strong). Bỏ chuỗi rác/thời gian. */
+// Selector tên actor, xếp từ CỤ THỂ → RỘNG. Facebook đổi class liên tục nhưng cấu trúc
+// header bài viết thường là: heading (h2/h3/h4) chứa a[role="link"] > strong > span, hoặc
+// link tác giả có aria đi kèm ảnh đại diện. Bắt nhiều biến thể để không bỏ sót.
+const ACTOR_SELECTORS = [
+  'h2 a[role="link"] strong span',
+  'h3 a[role="link"] strong span',
+  'h4 a[role="link"] strong span',
+  'h2 a[role="link"] span',
+  'h3 a[role="link"] span',
+  'h4 a[role="link"] span',
+  'h2 a[role="link"]',
+  'h3 a[role="link"]',
+  'h4 a[role="link"]',
+  'a[role="link"] strong span',
+  'strong a[role="link"]',
+  'span[dir="auto"] a[role="link"]',
+  'h2 a',
+  'h3 a',
+  'h4 a',
+  'strong a',
+];
+
+/** Text có vẻ là tên nguồn hợp lệ (không phải thời gian, số, URL, hay nhãn rác). */
+function looksLikeName(txt: string | null | undefined): txt is string {
+  if (!txt) return false;
+  const t = txt.trim();
+  if (t.length < 2 || t.length > 60) return false;
+  if (/^\d/.test(t)) return false; // "5 giờ", "12 tháng 3"…
+  if (/^https?:/.test(t)) return false;
+  // Nhãn thời gian/hành động phổ biến không phải tên nguồn.
+  if (/^(vừa xong|just now|đang theo dõi|follow|thích|like)\b/i.test(t)) return false;
+  return true;
+}
+
+/** Tên actor của bài viết: quét theo danh sách selector, lấy ứng viên hợp lệ đầu tiên. */
 function actorName(article: HTMLElement): string | null {
-  const links = article.querySelectorAll<HTMLElement>('h2 a, h3 a, h4 a, strong a');
-  for (const el of links) {
-    const txt = el.textContent?.trim();
-    if (txt && txt.length >= 2 && txt.length <= 60 && !/^\d/.test(txt) && !/^https?:/.test(txt)) {
-      return txt;
+  for (const sel of ACTOR_SELECTORS) {
+    for (const el of article.querySelectorAll<HTMLElement>(sel)) {
+      const txt = el.textContent?.trim();
+      if (looksLikeName(txt)) return txt;
     }
   }
   return null;
@@ -78,11 +111,13 @@ export class FacebookAdapter implements FeedAdapter {
       });
     };
 
+    // Bài viết FB thường CAO hơn màn hình → chọn ngưỡng thấp (0.3) để post dài vẫn tính
+    // là "đã xem", thay vì đòi nửa bài lọt khung nhìn (nhiều post sẽ không bao giờ đạt).
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           const el = e.target;
-          if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+          if (e.isIntersecting && e.intersectionRatio >= 0.3) {
             if (recorded.has(el) || timers.has(el)) continue;
             const id = window.setTimeout(() => {
               timers.delete(el);
@@ -98,7 +133,7 @@ export class FacebookAdapter implements FeedAdapter {
           }
         }
       },
-      { threshold: [0, 0.5, 1] },
+      { threshold: [0, 0.3, 0.6, 1] },
     );
 
     // Quan sát article hiện có + article mới thêm vào khi cuộn (observe trùng là no-op).

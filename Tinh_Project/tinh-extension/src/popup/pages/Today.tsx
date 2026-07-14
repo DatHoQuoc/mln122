@@ -27,17 +27,20 @@ export function TodayPage() {
 
   return (
     <div className="tinh-stats">
-      <Stat label={vi.today.pauseToday} value={pauseToday} />
-      <Stat label={vi.today.streak} value={streak} />
+      <Stat label={vi.today.pauseToday} value={pauseToday} hint={vi.today.pauseTodayHint} />
+      <Stat label={vi.today.streak} value={streak} hint={vi.today.streakHint} />
     </div>
   );
 }
 
-function Stat({ label, value }: { label: string; value: number }) {
+function Stat({ label, value, hint }: { label: string; value: number; hint?: string }) {
   return (
-    <div className="stat">
+    <div className="stat" title={hint}>
       <div className="stat-value">{value}</div>
-      <div className="stat-label">{label}</div>
+      <div className="stat-label">
+        {label}
+        {hint && <span className="stat-info" title={hint} aria-label={hint}> ⓘ</span>}
+      </div>
     </div>
   );
 }
