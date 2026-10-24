@@ -207,7 +207,7 @@
       D('k4', 'Gắn bó với nhân dân; lắng nghe; <b>CHỊU SỰ GIÁM SÁT</b> của nhân dân', 4),
       D('k5', '<b>KIỂM SOÁT</b>, ngăn ngừa, trừng trị quan liêu, tham nhũng, lộng quyền, vô trách nhiệm', 5),
       D('k6', 'Tập trung dân chủ; thống nhất quyền lực; chỉ đạo thống nhất của Trung ương', 6),
-      O('o1', 'k3 · k4 · k5 cùng hướng về đâu?', 7),
+      O('o1', 'Ba ý: tránh lạm quyền · chịu sự giám sát · kiểm soát — cùng hướng về đâu?', 7),
       H('HUB', '?', 8)
     ],
     rows: [R([['k1', 'k2', 'k3'], ['o1', 'HUB'], ['k4', 'k5', 'k6']], [1, 0.7, 1])],
