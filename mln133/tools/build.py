@@ -224,7 +224,7 @@ for d in D:
     k = PAGE.get(d['rawid'], 0); PAGE[d['rawid']] = k + 1
     say = sc['say']
     if 'split' in sc: say = say[:sc['split']] if k == 0 else say[sc['split']:]
-    note = [f"{sc['who']} · {sc['time']}", f"Thao tác: {sc['act']}", f"(Trang này: {len(clicks)} lần bấm)" if clicks else "(Trang này: không có hiệu ứng)", ''] + say
+    note = [f"Thời gian gợi ý: {sc['time']}", f"Thao tác: {sc['act']}", f"(Trang này: {len(clicks)} lần bấm)" if clicks else "(Trang này: không có hiệu ứng)", ''] + say
     if sc.get('next') and ('split' not in sc or k > 0): note += ['', 'Chuyển ý: ' + sc['next']]
     sl.notes_slide.notes_text_frame.text = '\n'.join(note)
 

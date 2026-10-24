@@ -20,8 +20,8 @@
     id: 'M0', part: 0, cover: true,
     title: 'Dân chủ xã hội chủ nghĩa và Nhà nước pháp quyền xã hội chủ nghĩa ở Việt Nam',
     nodes: [
-      D('sub', 'MLN131 · Chương 4 · Mục III · Nhóm [..]', 0),
-      D('mem', '[Họ tên – MSSV] × 4', 0)
+      D('sub', 'MLN131 · Chương 4 · Mục III · <b>Nhóm 2</b>', 0),
+      D('mem', 'Phan Thanh Đức – SE181719<br>Hồ Trần Quân – SE180175<br>Phan Văn Huy – SE184969<br>Hồ Quốc Đạt – SE193114<br>Nguyễn Thị Mai Vỹ – SE193020', 0)
     ],
     rows: [R([['sub', 'mem']])], edges: []
   });
@@ -29,10 +29,10 @@
   SLIDES.push({
     id: 'M2', part: 0, title: 'Nội dung trình bày',
     nodes: [
-      D('a1', '<b>1 · Dân chủ xã hội chủ nghĩa ở Việt Nam</b><br>a) Sự ra đời, phát triển · b) Bản chất', 0, { who: 'Thành viên 1 · 2' }),
-      D('a2', '<b>2 · Nhà nước pháp quyền xã hội chủ nghĩa ở Việt Nam</b><br>a) Quan niệm · b) Sáu đặc điểm', 0, { who: 'Thành viên 3' }),
-      D('a3', '<b>3 · Phát huy dân chủ, xây dựng Nhà nước pháp quyền hiện nay</b><br>a) Năm giải pháp phát huy dân chủ · b) Bốn giải pháp hoàn thiện Nhà nước', 0, { who: 'Thành viên 4' }),
-      D('a4', 'Tổng kết cả bài · Hỏi đáp', 0, { who: 'Thành viên 1' })
+      D('a1', '<b>1 · Dân chủ xã hội chủ nghĩa ở Việt Nam</b><br>a) Sự ra đời, phát triển · b) Bản chất', 0),
+      D('a2', '<b>2 · Nhà nước pháp quyền xã hội chủ nghĩa ở Việt Nam</b><br>a) Quan niệm · b) Sáu đặc điểm', 0),
+      D('a3', '<b>3 · Phát huy dân chủ, xây dựng Nhà nước pháp quyền hiện nay</b><br>a) Năm giải pháp phát huy dân chủ · b) Bốn giải pháp hoàn thiện Nhà nước', 0),
+      D('a4', 'Tổng kết cả bài · Hỏi đáp', 0)
     ],
     rows: [R([['a1', 'a2', 'a3', 'a4']])], edges: []
   });
