@@ -79,10 +79,17 @@ html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; f
 .static .node, .static .e, .static .elab { transition: none !important; }
 
 .t-quote {
-  font-family: "Noto Serif", Georgia, "Times New Roman", serif; font-style: italic; border-left: 6px solid var(--red);
-  padding-left: 52px; overflow: hidden;
+  font-family: "Noto Serif", Georgia, "Times New Roman", serif; font-style: italic;
+  background: #FFF6DC; border: 2px solid var(--gold); border-radius: 26px 26px 26px 6px;
+  padding: 22px 28px 18px 30px; margin-bottom: 14px; box-shadow: 0 6px 16px rgba(120,80,30,.16);
 }
-.t-quote::before { content: "\201C"; position: absolute; left: 12px; top: -6px; font-size: 90px; line-height: 1; color: var(--red); opacity: .25; font-style: normal; }
+.t-quote::after { /* đuôi bong bóng */
+  content: ""; position: absolute; left: 30px; bottom: -12px; width: 20px; height: 20px; background: #FFF6DC;
+  border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold); transform: rotate(45deg); border-bottom-right-radius: 4px;
+}
+:root[data-theme="dark"] .t-quote, :root[data-theme="dark"] .t-quote::after { background: #3a2f22; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .t-quote, :root:not([data-theme="light"]) .t-quote::after { background: #3a2f22; } }
+.who { position: absolute; top: -15px; left: 24px; font-family: "Be Vietnam Pro", sans-serif; font-style: normal; font-size: 17px; font-weight: 700; color: #fff; background: var(--red); padding: 2px 14px; border-radius: 999px; border: 2px solid var(--gold); letter-spacing: .3px; z-index: 2; }
 .t-quote .blank { font-style: normal; }
 .blank { display: inline-block; min-width: 3em; border-bottom: 3px solid var(--red); text-align: center; line-height: 1.1; }
 .blank b { visibility: hidden; color: var(--red); font-weight: 800; }

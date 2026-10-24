@@ -11,7 +11,7 @@
   const cv = (ids, h) => ids.map(i => [i, h, 'conv']);
   const ar = (ids, h) => ids.map(i => [i, h, 'arrow']);
   const chain = ids => ids.slice(1).map((b, i) => [ids[i], b, 'arrow']);
-  const R = (cells, w) => ({ cells, w });
+  const R = (cells, w, gap) => ({ cells, w, gap });
 
   const SLIDES = [];
 
@@ -59,14 +59,14 @@
       D('d1', 'Đường lối đổi mới toàn diện', 1),
       D('d2', 'Phát huy dân chủ → tạo động lực mạnh mẽ cho phát triển', 2),
       G('g1', 'A1: vị trí dân chủ — CHƯA xác định', 5),
-      Q('q1', '“…quán triệt tư tưởng ‘lấy dân làm gốc’, xây dựng và phát huy quyền làm chủ của nhân dân lao động”', 3, { x: ['X8'] }),
+      Q('q1', '“…quán triệt tư tưởng ‘lấy dân làm gốc’, xây dựng và phát huy quyền làm chủ của nhân dân lao động”', 3, { x: ['X8'], who: 'Đại hội VI' }),
       D('d3', 'Bài học: “cách mạng là sự nghiệp của quần chúng”', 4),
-      Q('q2', '“ở đâu, nhân dân lao động có ý thức làm chủ và được làm chủ thật sự, thì ở đấy xuất hiện phong trào cách mạng”', 4),
+      Q('q2', '“ở đâu, nhân dân lao động có ý thức làm chủ và được làm chủ thật sự, thì ở đấy xuất hiện phong trào cách mạng”', 4, { who: 'Đại hội VI' }),
       O('o1', 'So với trước: dân chủ được gọi tên là gì?', 5),
       H('HUB', 'Dân chủ = ĐỘNG LỰC · Lấy dân làm gốc', 6)
     ],
     rows: [R([['d1', 'd2', 'g1'], ['o1', 'HUB'], ['q1', 'd3', 'q2']], [1, 0.9, 1.15])],
-    edges: [['d1', 'd2', 'arrow'], ['d2', 'HUB', 'conv'], ['q1', 'HUB', 'conv'], ['d3', 'q2', 'arrow'], ['q2', 'HUB', 'conv'], ['g1', 'd2', 'vs', 'đối chiếu']]
+    edges: [['d1', 'd2', 'arrow'], ['d2', 'HUB', 'conv'], ['q1', 'HUB', 'conv'], ['d3', 'q2', 'arrow'], ['q2', 'HUB', 'conv'], ['g1', 'd2', 'vs']]
   });
 
   SLIDES.push({
@@ -74,13 +74,13 @@
     nodes: [
       D('d1', 'Đặc trưng của CNXH Việt Nam: do nhân dân làm chủ', 1),
       D('d2', 'Mục tiêu tổng quát: Dân giàu, nước mạnh, <b>DÂN CHỦ</b>, công bằng, văn minh', 2),
-      Q('q1', '“Dân chủ XHCN là bản chất của chế độ ta, vừa là mục tiêu, vừa là động lực…”', 3),
+      Q('q1', '“Dân chủ XHCN là bản chất của chế độ ta, vừa là mục tiêu, vừa là động lực…”', 3, { who: 'Đảng' }),
       D('d3', 'Thực hiện ở mỗi cấp, trên tất cả các lĩnh vực', 4),
       D('d4', 'Gắn liền với kỷ luật, kỷ cương; thể chế hóa bằng pháp luật, được pháp luật bảo đảm', 5, { x: ['X2'] }),
       G('g1', 'A1: bản chất CHƯA xác định · CHƯA gắn pháp luật', 6),
       H('HUB', 'Dân chủ ngày càng được nhận thức, phát triển, hoàn thiện đúng đắn, phù hợp hơn', 7)
     ],
-    rows: [R([['d1'], ['d2'], ['q1'], ['d3'], ['d4']]), R([['g1']]), R([['HUB']])],
+    rows: [R([['d1'], ['d2'], ['q1'], ['d3'], ['d4']]), R([['g1'], []], [4, 1.3]), R([['HUB']])],
     edges: [...chain(['d1', 'd2', 'q1', 'd3', 'd4']), ['d4', 'HUB', 'conv'], ['g1', 'q1', 'vs'], ['g1', 'd4', 'vs']]
   });
 
@@ -96,13 +96,13 @@
   SLIDES.push({
     id: 'A4', part: 1, title: '“Nước ta là nước dân chủ” — Hồ Chí Minh', fill: 3,
     nodes: [
-      ...QS.map(q => Q(q[0], q[1], 1)),
+      ...QS.map(q => Q(q[0], q[1], 1, { who: 'Hồ Chí Minh' })),
       O('o1', 'Chữ còn thiếu là gì?', 2),
       H('HUB', 'TẤT CẢ QUYỀN LỰC THUỘC VỀ NHÂN DÂN — dân là gốc, là chủ, dân làm chủ', 4, { x: ['X1'] }),
       D('s1', 'Dựa vào: Nhà nước XHCN + sự ủng hộ, giúp đỡ của nhân dân', 5),
       D('s2', 'Con người: tư cách công dân, tư cách người làm chủ', 5)
     ],
-    rows: [R([['q1', 'q2', 'q3', 'q4'], ['o1', 'HUB'], ['q5', 'q6', 'q7']], [1, 0.95, 1]), R([{ ids: ['s1', 's2'], g: 2 }])],
+    rows: [R([['q1', 'q2', 'q3', 'q4', 's1'], ['o1', 'HUB'], ['q5', 'q6', 'q7', 's2']], [1, 0.95, 1])],
     edges: [...cv(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'], 'HUB'), ['s1', 'HUB', 'arrow'], ['s2', 'HUB', 'arrow']]
   });
 
@@ -117,7 +117,7 @@
       H('HUB', 'Dân chủ phải được thực hiện ở TẤT CẢ CÁC CẤP, MỌI LĨNH VỰC: kinh tế · chính trị · văn hóa · xã hội', 6)
     ],
     rows: [R([['n1', 'n2'], ['g1', 'HUB'], ['n3', 'n4']], [1, 1.05, 1])],
-    edges: [...cv(['n1', 'n2', 'n3', 'n4'], 'HUB'), ...['n1', 'n2', 'n3', 'n4'].map(n => ['g1', n, 'vs', n === 'n1' ? 'gom lại' : '', 5])]
+    edges: [...cv(['n1', 'n2', 'n3', 'n4'], 'HUB'), ['g1', 'HUB', 'cross']]
   });
 
   SLIDES.push({
@@ -194,7 +194,7 @@
       D('s1', 'Bảo đảm quyền làm chủ từ chính trị, kinh tế đến văn hóa, xã hội; phát huy tính tích cực, sáng tạo của nhân dân', 8)
     ],
     rows: [R([['g1', 'g2', 'g3'], ['HUB', 's1'], ['g4', 'g5', 'g6']], [1, 1.2, 1])],
-    edges: [...cv(['g1', 'g2', 'g3', 'g4', 'g5'], 'HUB'), ['g6', 'HUB', 'cross', 'X8 khép vòng'], ['HUB', 's1', 'arrow']]
+    edges: [...cv(['g1', 'g2', 'g3', 'g4', 'g5'], 'HUB'), ['g6', 'HUB', 'conv'], ['HUB', 's1', 'arrow']]
   });
 
   /* ---------- PHẦN 2 ---------- */
@@ -218,8 +218,8 @@
     id: 'B2', part: 2, title: 'Nhận thức qua các kỳ Đại hội', hl: 5,
     nodes: [
       D('s1', 'Chủ trương: Nhà nước pháp quyền Việt Nam <b>CỦA DÂN, DO DÂN, VÌ DÂN</b> → quản lý xã hội bằng pháp luật; mọi người có nghĩa vụ chấp hành Hiến pháp, pháp luật', 1),
-      Q('s2', 'ĐH XII: “Quyền lực nhà nước là thống nhất, có sự phân công, phối hợp, kiểm soát…”', 2),
-      Q('s3', 'ĐH XIII: “…phân công <mark>rành mạch</mark>, phối hợp <mark>chặt chẽ</mark> và <mark>tăng cường</mark> kiểm soát quyền lực nhà nước”', 3),
+      Q('s2', 'ĐH XII: “Quyền lực nhà nước là thống nhất, có sự phân công, phối hợp, kiểm soát…”', 2, { who: 'ĐH XII' }),
+      Q('s3', 'ĐH XIII: “…phân công <mark>rành mạch</mark>, phối hợp <mark>chặt chẽ</mark> và <mark>tăng cường</mark> kiểm soát quyền lực nhà nước”', 3, { who: 'ĐH XIII' }),
       O('o1', 'Câu XIII thêm chữ nào so với XII?', 4),
       G('g1', 'B1: k3 · k4 · k5', 6, { x: ['X3'] }),
       G('g2', 'A6: phân công, phối hợp, kiểm soát', 6, { x: ['X3'] }),
@@ -273,7 +273,7 @@
       D('P7', 'Tất cả vì mục tiêu phục vụ nhân dân', 2),
       O('o1', 'Đặc điểm nào KHÔNG có cặp?', 4)
     ],
-    rows: [R([['F1', 'F2', 'F3', 'F4', 'F5', 'F6'], ['P7', 'P1', 'P6', 'P5', 'P2', 'P3', 'P4']], [0.7, 3]), R([['o1']])],
+    rows: [R([['F1', 'F2', 'F3', 'F4', 'F5', 'F6'], ['P7', 'P1', 'P6', 'P5', 'P2', 'P3', 'P4']], [0.7, 3], 160), R([['o1']])],
     edges: [['P7', 'F1', 'vs', '', 3], ['P1', 'F2', 'vs', '', 3], ['P6', 'F3', 'vs', '', 3], ['P6', 'F6', 'vs', '', 3], ['P5', 'F5', 'vs', '', 3]]
   });
 
@@ -303,7 +303,7 @@
       H('HUB', 'Hoàn thiện thể chế kinh tế thị trường định hướng XHCN → CƠ SỞ KINH TẾ VỮNG CHẮC cho dân chủ', 7, { x: ['X5'] })
     ],
     rows: [R([['e1', 'e2', 'e3'], ['g1', 'HUB'], ['e4', 'e5']], [1, 1, 1])],
-    edges: [...cv(['e1', 'e2', 'e3', 'e4', 'e5'], 'HUB'), ['g1', 'HUB', 'cross', 'X5 — trở ngại ↔ giải pháp']]
+    edges: [...cv(['e1', 'e2', 'e3', 'e4', 'e5'], 'HUB'), ['g1', 'HUB', 'cross', 'X5']]
   });
 
   SLIDES.push({
@@ -338,8 +338,8 @@
       G('g2', 'A7: dân biết, bàn, làm, kiểm tra', 8, { x: ['X4'] }),
       H('H5', 'Năm là: hệ thống giám sát, phản biện xã hội → ĐỂ PHÁT HUY QUYỀN LÀM CHỦ của nhân dân', 9, { x: ['X4'] })
     ],
-    rows: [R([{ ids: ['t1', 't2', 't3', 't4'], g: 2 }, ['H4']], [2.2, 1]), R([{ ids: ['m1', 'm2', 'm3', 'm4', 'g1', 'g2'], g: 3 }, ['H5']], [3, 1])],
-    edges: [...cv(['t1', 't2', 't3', 't4'], 'H4'), ...cv(['m1', 'm2', 'm3', 'm4'], 'H5'), ['g1', 'm4', 'cross', 'X6'], ['g2', 'H5', 'cross', 'X4']]
+    rows: [R([{ ids: ['t1', 't2', 't3', 't4'], g: 2 }, ['H4']], [2.2, 1]), R([{ ids: ['m1', 'm2', 'm3', 'm4', 'g1'], g: 3 }, ['g2', 'H5']], [3, 1])],
+    edges: [...cv(['t1', 't2', 't3', 't4'], 'H4'), ...cv(['m1', 'm2', 'm3', 'm4'], 'H5'), ['g1', 'm4', 'cross', 'X6'], ['g2', 'H5', 'cross']]
   });
 
   SLIDES.push({
@@ -358,7 +358,7 @@
       D('r5', 'để phát huy quyền làm chủ', 1),
       H('HUB', 'a) PHÁT HUY DÂN CHỦ XHCN Ở VIỆT NAM HIỆN NAY', 3)
     ],
-    rows: [R([['o1']]), R([['a1', 'a2', 'a3', 'a4', 'a5'], ['r4', 'r1', 'r5', 'r3', 'r2']], [1, 1]), R([['HUB']])],
+    rows: [R([['o1']]), R([['a1', 'a2', 'a3', 'a4', 'a5'], ['r4', 'r1', 'r5', 'r3', 'r2']], [1, 1.1], 220), R([['HUB']])],
     edges: [...[1, 2, 3, 4, 5].map(i => ['a' + i, 'r' + i, 'arrow', '', 2]), ...cv(['r1', 'r2', 'r3', 'r4', 'r5'], 'HUB')]
   });
 
@@ -395,8 +395,8 @@
       G('g1', 'B1-k5: trừng trị tham nhũng', 9, { x: ['X7'] }),
       H('H4', 'Bốn là: phòng, chống tham nhũng, lãng phí — nhiệm vụ CẤP BÁCH, LÂU DÀI', 10, { x: ['X7'] })
     ],
-    rows: [R([{ ids: ['c1', 'c2', 'c3'], g: 3 }, ['H3']], [3.2, 1]), R([{ ids: ['x1', 'x2', 'x3', 'x4', 'g1'], g: 3 }, ['H4']], [3.2, 1])],
-    edges: [...cv(['c1', 'c2', 'c3'], 'H3'), ...cv(['x1', 'x2', 'x3', 'x4'], 'H4'), ['g1', 'H4', 'cross', 'X7']]
+    rows: [R([{ ids: ['c1', 'c2', 'c3'], g: 3 }, ['H3']], [3.2, 1]), R([{ ids: ['x1', 'x2', 'x3', 'x4'], g: 3 }, ['g1', 'H4']], [3.2, 1])],
+    edges: [...cv(['c1', 'c2', 'c3'], 'H3'), ...cv(['x1', 'x2', 'x3', 'x4'], 'H4'), ['g1', 'H4', 'cross']]
   });
 
   const PAIRS = [
