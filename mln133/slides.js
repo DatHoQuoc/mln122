@@ -208,7 +208,7 @@
       D('k5', '<b>KIỂM SOÁT</b>, ngăn ngừa, trừng trị quan liêu, tham nhũng, lộng quyền, vô trách nhiệm', 5),
       D('k6', 'Tập trung dân chủ; thống nhất quyền lực; chỉ đạo thống nhất của Trung ương', 6),
       O('o1', 'Ba ý: tránh lạm quyền · chịu sự giám sát · kiểm soát — cùng hướng về đâu?', 7),
-      H('HUB', '?', 8)
+      H('HUB', 'Cùng hướng tới một điều — câu trả lời ở slide kế tiếp', 8)
     ],
     rows: [R([['k1', 'k2', 'k3'], ['o1', 'HUB'], ['k4', 'k5', 'k6']], [1, 0.7, 1])],
     edges: ar(['k1', 'k2', 'k3', 'k4', 'k5', 'k6'], 'HUB')
@@ -218,9 +218,9 @@
     id: 'B2', part: 2, title: 'Nhận thức qua các kỳ Đại hội', hl: 5,
     nodes: [
       D('s1', 'Chủ trương: Nhà nước pháp quyền Việt Nam <b>CỦA DÂN, DO DÂN, VÌ DÂN</b> → quản lý xã hội bằng pháp luật; mọi người có nghĩa vụ chấp hành Hiến pháp, pháp luật', 1),
-      Q('s2', 'ĐH XII: “Quyền lực nhà nước là thống nhất, có sự phân công, phối hợp, kiểm soát…”', 2, { who: 'ĐH XII' }),
-      Q('s3', 'ĐH XIII: “…phân công <mark>rành mạch</mark>, phối hợp <mark>chặt chẽ</mark> và <mark>tăng cường</mark> kiểm soát quyền lực nhà nước”', 3, { who: 'ĐH XIII' }),
-      O('o1', 'Câu XIII thêm chữ nào so với XII?', 4),
+      Q('s2', '“Quyền lực nhà nước là thống nhất, có sự phân công, phối hợp, kiểm soát…”', 2, { who: 'Đại hội XII' }),
+      Q('s3', '“…phân công <mark>rành mạch</mark>, phối hợp <mark>chặt chẽ</mark> và <mark>tăng cường</mark> kiểm soát quyền lực nhà nước”', 3, { who: 'Đại hội XIII' }),
+      O('o1', 'Điểm mới của Đại hội XIII so với Đại hội XII', 4),
       G('g1', 'Cương lĩnh: tránh lạm quyền · chịu sự giám sát của nhân dân · kiểm soát, trừng trị tham nhũng', 6),
       G('g2', 'Dân chủ gián tiếp: quyền lực thống nhất, có phân công, phối hợp, kiểm soát', 6),
       H('HUB', 'KIỂM SOÁT QUYỀN LỰC — nhận thức về Nhà nước pháp quyền ngày càng sáng tỏ', 7)
