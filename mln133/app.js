@@ -14,7 +14,7 @@
   };
 
   function nodeHTML(n) {
-    const xs = (n.x || []).map(x => `<a class="x" data-x="${x}" href="#K1">${x}</a>`).join('');
+    const xs = '';
     const text = n.text.replace(/___/g, '<span class="blank"><b>dân</b></span>');
     const inner = n.type === 'hub' ? `<span class="q">?</span><div class="txt">${text}</div>` : `<div class="txt">${text}</div>`;
     const who = n.who ? `<span class="who">${n.who}</span>` : '';
@@ -25,7 +25,7 @@
     const st = document.createElement('section');
     st.className = 'stage' + (sl.cover ? ' cover' : '');
     const byId = {}; sl.nodes.forEach(n => byId[n.id] = n);
-    let h = `<header><h1>${sl.title}</h1><span class="tag">${sl.id}</span></header>
+    let h = `<header><h1>${sl.title}</h1></header>
       <svg class="edges"><defs>
         <marker id="mG" class="mG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
         <marker id="mR" class="mR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z"/></marker>
