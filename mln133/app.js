@@ -160,6 +160,7 @@
       }
       it.o.line.setAttribute('d', roundPath(pts, 14));
       const vis = n >= it.need;
+      it.o.line.dataset.need = it.need;
       it.o.line.classList.toggle('on', vis);
       if (it.o.lab) {
         let bi = 0, bl = -1;
