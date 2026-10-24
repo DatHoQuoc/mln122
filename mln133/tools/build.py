@@ -97,10 +97,8 @@ for d in D:
     if not d['cover']:
         shape(sl, MSO_SHAPE.RECTANGLE, 0, 0, 1920, 112, '8C2F2B')
         shape(sl, MSO_SHAPE.RECTANGLE, 0, 112, 1920, 5, 'C9A24B')
-        t = shape(sl, MSO_SHAPE.RECTANGLE, 60, 8, 1660, 96)
+        t = shape(sl, MSO_SHAPE.RECTANGLE, 60, 8, 1800, 96)
         write(t, [{'t': d['title']}], 44, 'F6E3AA', SERIF, anchor=MSO_ANCHOR.MIDDLE, ml=20, mt=0, bold=True)
-        tg = shape(sl, MSO_SHAPE.ROUNDED_RECTANGLE, 1772, 28, 78, 50, 'E6CF93', 'C9A24B', 3, adj=[.2])
-        write(tg, [{'t': d['rawid']}], 28, '6A1F1C', SANS, PP_ALIGN.CENTER, MSO_ANCHOR.MIDDLE, 0, 0, bold=True)
     else:
         t = sl.shapes.add_textbox(E(180), E(300), E(1560), E(380))
         write(t, [{'t': d['title']}], 76, '8C2F2B', SERIF, PP_ALIGN.CENTER, MSO_ANCHOR.MIDDLE, 0, 0, bold=True)

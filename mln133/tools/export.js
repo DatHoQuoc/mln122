@@ -28,7 +28,7 @@ for(const [id,mx] of ids){
         const o={id:n.id,type,s:n.s||0,x:r.x,y:r.y,w:r.w,h:r.h,fs:parseFloat(getComputedStyle(el).fontSize),
           who:n.who||null,xs:(n.x||[]),alert:(n.alert!=null&&step>=n.alert),xcode:n.xcode||null};
         const txt=el.querySelector('.txt');
-        if(type==='chips'){o.chip={head:txt.querySelector('.ch').textContent,items:[...txt.querySelectorAll('.chip')].map(a=>a.querySelector('i').textContent+' '+a.childNodes[1].textContent)}}
+        if(type==='chips'){o.chip={head:txt.querySelector('.ch').textContent,items:[...txt.querySelectorAll('.chip')].map(a=>a.textContent)}}
         else if(type==='xcard'){o.xc={code:txt.querySelector('.xc').textContent,b:txt.querySelector('.xt b').textContent,e:txt.querySelector('.xt em').textContent}}
         else{const rr=[];runs(txt,rr,{b:type==='hub',r:false});o.runs=rr}
         nodes.push(o)});
