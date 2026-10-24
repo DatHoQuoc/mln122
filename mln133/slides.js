@@ -208,7 +208,7 @@
       D('k5', '<b>KIỂM SOÁT</b>, ngăn ngừa, trừng trị quan liêu, tham nhũng, lộng quyền, vô trách nhiệm', 5),
       D('k6', 'Tập trung dân chủ; thống nhất quyền lực; chỉ đạo thống nhất của Trung ương', 6),
       O('o1', 'Ba ý: tránh lạm quyền · chịu sự giám sát · kiểm soát — cùng hướng về đâu?', 7),
-      H('HUB', '?', 8)
+      H('HUB', 'Cùng hướng tới một điều — câu trả lời ở slide kế tiếp', 8)
     ],
     rows: [R([['k1', 'k2', 'k3'], ['o1', 'HUB'], ['k4', 'k5', 'k6']], [1, 0.7, 1])],
     edges: ar(['k1', 'k2', 'k3', 'k4', 'k5', 'k6'], 'HUB')
@@ -218,9 +218,9 @@
     id: 'B2', part: 2, title: 'Nhận thức qua các kỳ Đại hội', hl: 5,
     nodes: [
       D('s1', 'Chủ trương: Nhà nước pháp quyền Việt Nam <b>CỦA DÂN, DO DÂN, VÌ DÂN</b> → quản lý xã hội bằng pháp luật; mọi người có nghĩa vụ chấp hành Hiến pháp, pháp luật', 1),
-      Q('s2', 'ĐH XII: “Quyền lực nhà nước là thống nhất, có sự phân công, phối hợp, kiểm soát…”', 2, { who: 'ĐH XII' }),
-      Q('s3', 'ĐH XIII: “…phân công <mark>rành mạch</mark>, phối hợp <mark>chặt chẽ</mark> và <mark>tăng cường</mark> kiểm soát quyền lực nhà nước”', 3, { who: 'ĐH XIII' }),
-      O('o1', 'Câu XIII thêm chữ nào so với XII?', 4),
+      Q('s2', '“Quyền lực nhà nước là thống nhất, có sự phân công, phối hợp, kiểm soát…”', 2, { who: 'Đại hội XII' }),
+      Q('s3', '“…phân công <mark>rành mạch</mark>, phối hợp <mark>chặt chẽ</mark> và <mark>tăng cường</mark> kiểm soát quyền lực nhà nước”', 3, { who: 'Đại hội XIII' }),
+      O('o1', 'Điểm mới của Đại hội XIII so với Đại hội XII', 4),
       G('g1', 'Cương lĩnh: tránh lạm quyền · chịu sự giám sát của nhân dân · kiểm soát, trừng trị tham nhũng', 6),
       G('g2', 'Dân chủ gián tiếp: quyền lực thống nhất, có phân công, phối hợp, kiểm soát', 6),
       H('HUB', 'KIỂM SOÁT QUYỀN LỰC — nhận thức về Nhà nước pháp quyền ngày càng sáng tỏ', 7)
@@ -272,19 +272,21 @@
       D('P5', 'Pháp luật nghiêm minh', 2),
       D('P6', 'Cơ quan nhà nước phân công, phối hợp, kiểm soát lẫn nhau', 2),
       D('P7', 'Tất cả vì mục tiêu phục vụ nhân dân', 2),
-      O('o1', 'Đặc điểm nào KHÔNG có cặp?', 4)
+      N('hF', 'head', 'Sáu đặc điểm của Nhà nước pháp quyền XHCN Việt Nam', 1),
+      N('hP', 'head', 'Quan niệm chung về nhà nước pháp quyền', 1),
+      O('o1', 'Đặc điểm 4 (Đảng lãnh đạo) không có cặp → đây là điểm khác biệt của Nhà nước pháp quyền XHCN Việt Nam', 4)
     ],
-    rows: [R([['F1', 'F2', 'F3', 'F4', 'F5', 'F6'], ['P7', 'P1', 'P6', 'P5', 'P2', 'P3', 'P4']], [1.5, 2.6], 150), R([['o1']])],
+    rows: [R([['hF'], ['hP']], [1.5, 2.6], 150), R([['F1', 'F2', 'F3', 'F4', 'F5', 'F6'], ['P7', 'P1', 'P6', 'P5', 'P2', 'P3', 'P4']], [1.5, 2.6], 150), R([['o1']])],
     edges: [['P7', 'F1', 'vs', '', 3], ['P1', 'F2', 'vs', '', 3], ['P6', 'F3', 'vs', '', 3], ['P6', 'F6', 'vs', '', 3], ['P5', 'F5', 'vs', '', 3]]
   });
 
   SLIDES.push({
     id: 'B6', part: 2, title: 'Phần 2 — Nhà nước pháp quyền XHCN Việt Nam',
     nodes: [
-      D('V1', '<b>Phần CHUNG:</b> các tinh thần cơ bản của nhà nước pháp quyền nói chung (những cặp khớp vừa nối)', 1),
-      G('g1', 'Đặc điểm “Đảng Cộng sản Việt Nam lãnh đạo” không có cặp trong quan niệm chung', 2),
-      D('V2', '<b>Phần KHÁC ①:</b> mang BẢN CHẤT GIAI CẤP CÔNG NHÂN, phục vụ lợi ích nhân dân', 3),
-      D('V3', '<b>Phần KHÁC ②:</b> công cụ chủ yếu để Đảng Cộng sản Việt Nam định hướng đi lên CNXH', 4),
+      D('V1', '<b>Điểm CHUNG</b> với nhà nước pháp quyền nói chung: thượng tôn pháp luật, pháp luật nghiêm minh, phân công – phối hợp – kiểm soát quyền lực, tất cả vì phục vụ nhân dân', 1),
+      G('g1', 'Đặc điểm 4 (Đảng Cộng sản Việt Nam lãnh đạo) không có cặp trong quan niệm chung', 2),
+      D('V2', '<b>Điểm KHÁC thứ nhất:</b> Nhà nước mang BẢN CHẤT GIAI CẤP CÔNG NHÂN, phục vụ lợi ích của nhân dân', 3),
+      D('V3', '<b>Điểm KHÁC thứ hai:</b> Nhà nước là công cụ chủ yếu để Đảng Cộng sản Việt Nam định hướng đi lên chủ nghĩa xã hội', 4),
       H('HUB', 'Vừa thể hiện tinh thần chung của nhà nước pháp quyền, vừa có sự khác biệt', 5)
     ],
     rows: [R([['V1'], ['V2'], ['g1', 'V3']]), R([['HUB']])],
