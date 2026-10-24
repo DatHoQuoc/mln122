@@ -1,4 +1,4 @@
-/* Dữ liệu 26 slide — đặc tả sơ đồ node (v04, quy nạp).
+/* Dữ liệu 28 slide — đặc tả sơ đồ node (v04, quy nạp).
    rows: mỗi hàng gồm các "ô" (cell); mỗi ô xếp node theo cột (hoặc lưới g cột).
    edges: [từ, đến, loại(arrow|conv|cross|vs), nhãn, bước]  */
 (function () {
@@ -27,7 +27,19 @@
   });
 
   SLIDES.push({
-    id: 'M1', part: 0, title: 'Một chi tiết đáng chú ý',
+    id: 'M2', part: 0, title: 'Nội dung trình bày',
+    nodes: [
+      D('a1', '<b>1 · Dân chủ xã hội chủ nghĩa ở Việt Nam</b><br>a) Sự ra đời, phát triển · b) Bản chất', 0, { who: 'Thành viên 1 · 2' }),
+      D('a2', '<b>2 · Nhà nước pháp quyền xã hội chủ nghĩa ở Việt Nam</b><br>a) Quan niệm · b) Sáu đặc điểm', 0, { who: 'Thành viên 3' }),
+      D('a3', '<b>3 · Phát huy dân chủ, xây dựng Nhà nước pháp quyền hiện nay</b><br>a) Năm giải pháp phát huy dân chủ · b) Bốn giải pháp hoàn thiện Nhà nước', 0, { who: 'Thành viên 4' }),
+      D('a4', 'Tổng kết cả bài · Hỏi đáp', 0, { who: 'Thành viên 1' })
+    ],
+    rows: [R([['a1', 'a2', 'a3', 'a4']])], edges: []
+  });
+
+  /* ---------- PHẦN 1 ---------- */
+  SLIDES.push({
+    id: 'M1', part: 1, title: 'Một chi tiết đáng chú ý',
     nodes: [
       D('d1', '1945 — Chế độ dân chủ nhân dân được xác lập', 1),
       D('d2', '1976 — Tên nước: Cộng hòa xã hội chủ nghĩa Việt Nam', 2),
@@ -38,7 +50,6 @@
     edges: [...chain(['d1', 'd2', 'd3']), ['d3', 'HUB', 'conv']]
   });
 
-  /* ---------- PHẦN 1 ---------- */
   SLIDES.push({
     id: 'A1', part: 1, title: 'Trước Đổi mới',
     nodes: [
@@ -199,6 +210,23 @@
 
   /* ---------- PHẦN 2 ---------- */
   SLIDES.push({
+    id: 'B0', part: 2, title: 'Nhà nước pháp quyền là gì?',
+    nodes: [
+      D('p1', 'Thượng tôn pháp luật', 1),
+      D('p2', 'Hướng tới phúc lợi cho mọi người; cá nhân được tự do, bình đẳng, phát huy hết năng lực', 2),
+      D('p3', 'Cơ quan nhà nước được phân quyền rõ ràng; được chấp nhận trên nguyên tắc bình đẳng giữa các thế lực, giai cấp, tầng lớp', 3),
+      O('o1', 'Còn nhiều cách hiểu khác nhau. Song, có thể hiểu là…', 4),
+      D('p4', 'Mọi công dân được giáo dục pháp luật, hiểu biết và tuân thủ pháp luật', 5),
+      D('p5', 'Pháp luật bảo đảm tính nghiêm minh', 5),
+      D('p6', 'Cơ quan nhà nước phân công, phối hợp, kiểm soát lẫn nhau', 6),
+      D('p7', 'Tất cả vì mục tiêu phục vụ nhân dân', 6),
+      H('HUB', 'Nhà nước THƯỢNG TÔN PHÁP LUẬT, tất cả vì mục tiêu PHỤC VỤ NHÂN DÂN', 7)
+    ],
+    rows: [R([['p1', 'p2', 'p3'], ['o1', 'HUB'], ['p4', 'p5', 'p6', 'p7']], [1, 0.9, 1])],
+    edges: cv(['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7'], 'HUB')
+  });
+
+  SLIDES.push({
     id: 'B1', part: 2, title: 'Cương lĩnh xây dựng đất nước trong thời kỳ quá độ lên CNXH',
     nodes: [
       D('k1', 'Tối thượng của Hiến pháp và pháp luật', 1),
@@ -208,7 +236,7 @@
       D('k5', '<b>KIỂM SOÁT</b>, ngăn ngừa, trừng trị quan liêu, tham nhũng, lộng quyền, vô trách nhiệm', 5),
       D('k6', 'Tập trung dân chủ; thống nhất quyền lực; chỉ đạo thống nhất của Trung ương', 6),
       O('o1', 'Ba ý: tránh lạm quyền · chịu sự giám sát · kiểm soát — cùng hướng về đâu?', 7),
-      H('HUB', 'Cùng hướng tới một điều — câu trả lời ở slide kế tiếp', 8)
+      H('HUB', 'Ba ý cùng nói một điều: quyền lực nhà nước phải được KIỂM SOÁT', 8)
     ],
     rows: [R([['k1', 'k2', 'k3'], ['o1', 'HUB'], ['k4', 'k5', 'k6']], [1, 0.7, 1])],
     edges: ar(['k1', 'k2', 'k3', 'k4', 'k5', 'k6'], 'HUB')
@@ -238,7 +266,7 @@
       D('f2', '<b>2</b> · Dựa trên Hiến pháp, pháp luật; pháp luật ở VỊ TRÍ TỐI THƯỢNG', 2),
       G('g3', 'Đại hội XII, XIII: quyền lực thống nhất, có phân công, phối hợp, kiểm soát', 3),
       D('f3', '<b>3</b> · Quyền lực thống nhất; phân công rõ ràng, phối hợp nhịp nhàng, kiểm soát: lập pháp – hành pháp – tư pháp', 3),
-      H('HUB', 'Nhà nước pháp quyền XHCN Việt Nam (đang điền: 3/6)', 4)
+      H('HUB', 'Nhà nước pháp quyền XHCN Việt Nam — ba đặc điểm đầu', 4)
     ],
     rows: [R([{ ids: ['g1', 'f1', 'g2', 'f2', 'g3', 'f3'], g: 2 }, ['HUB']], [3, 1.1])],
     edges: [['g1', 'f1', 'arrow'], ['g2', 'f2', 'arrow'], ['g3', 'f3', 'arrow'], ...cv(['f1', 'f2', 'f3'], 'HUB')]
@@ -253,14 +281,14 @@
       D('f5', '<b>5</b> · Tôn trọng quyền con người — chủ thể, trung tâm của phát triển; “nhân dân có quyền bầu và bãi miễn những đại biểu không xứng đáng”', 2),
       G('g6', 'Cương lĩnh: tổ chức bộ máy theo nguyên tắc tập trung dân chủ', 3),
       D('f6', '<b>6</b> · Tập trung dân chủ — phân công, phân cấp, phối hợp, kiểm soát; quyền lực thống nhất, chỉ đạo thống nhất của Trung ương', 3),
-      H('HUB', 'Nhà nước pháp quyền XHCN Việt Nam (6/6)', 4)
+      H('HUB', 'Nhà nước pháp quyền XHCN Việt Nam — đủ sáu đặc điểm', 4)
     ],
     rows: [R([{ ids: ['g4', 'f4', 'g5', 'f5', 'g6', 'f6'], g: 2 }, ['HUB']], [3, 1.1])],
     edges: [['g4', 'f4', 'arrow'], ['g5', 'f5', 'arrow'], ['g6', 'f6', 'arrow'], ...cv(['f4', 'f5', 'f6'], 'HUB')]
   });
 
   const FT = ['Nhà nước của dân, do dân, vì dân', 'Hiến pháp, pháp luật ở vị trí tối thượng', 'Quyền lực thống nhất; phân công, phối hợp, kiểm soát', 'Đảng Cộng sản Việt Nam lãnh đạo; nhân dân giám sát', 'Tôn trọng quyền con người; pháp luật nghiêm minh', 'Tập trung dân chủ; chỉ đạo thống nhất của Trung ương'];
-  const F = FT.map((x, i) => G('F' + (i + 1), '<b>' + (i + 1) + '</b> · ' + x, 1, i === 3 ? { alert: 4 } : {}));
+  const F = FT.map((x, i) => G('F' + (i + 1), '<b>' + (i + 1) + '</b> · ' + x, 1, i === 3 ? { alert: 3 } : {}));
   SLIDES.push({
     id: 'B5', part: 2, title: 'Đối chiếu với quan niệm chung về nhà nước pháp quyền',
     nodes: [
@@ -268,16 +296,16 @@
       D('P1', 'Thượng tôn pháp luật', 1),
       D('P2', 'Hướng tới phúc lợi; cá nhân tự do, bình đẳng, phát huy năng lực', 1),
       D('P3', 'Cơ quan được phân quyền rõ ràng; chấp nhận trên nguyên tắc bình đẳng giữa các thế lực, giai cấp, tầng lớp', 1),
-      D('P4', 'Hiện nay còn những cách hiểu khác nhau. Song, được hiểu là: mọi công dân được giáo dục pháp luật, hiểu biết, tuân thủ pháp luật', 2),
-      D('P5', 'Pháp luật nghiêm minh', 2),
-      D('P6', 'Cơ quan nhà nước phân công, phối hợp, kiểm soát lẫn nhau', 2),
-      D('P7', 'Tất cả vì mục tiêu phục vụ nhân dân', 2),
+      D('P4', 'Mọi công dân được giáo dục pháp luật, hiểu biết, tuân thủ pháp luật', 1),
+      D('P5', 'Pháp luật nghiêm minh', 1),
+      D('P6', 'Cơ quan nhà nước phân công, phối hợp, kiểm soát lẫn nhau', 1),
+      D('P7', 'Tất cả vì mục tiêu phục vụ nhân dân', 1),
       N('hF', 'head', 'Sáu đặc điểm của Nhà nước pháp quyền XHCN Việt Nam', 1),
       N('hP', 'head', 'Quan niệm chung về nhà nước pháp quyền', 1),
-      O('o1', 'Đặc điểm 4 (Đảng lãnh đạo) không có cặp → đây là điểm khác biệt của Nhà nước pháp quyền XHCN Việt Nam', 4)
+      O('o1', 'Đặc điểm 4 (Đảng lãnh đạo) không có cặp → đây là điểm khác biệt của Nhà nước pháp quyền XHCN Việt Nam', 3)
     ],
     rows: [R([['hF'], ['hP']], [1.5, 2.6], 150), R([['F1', 'F2', 'F3', 'F4', 'F5', 'F6'], ['P7', 'P1', 'P6', 'P5', 'P2', 'P3', 'P4']], [1.5, 2.6], 150), R([['o1']])],
-    edges: [['P7', 'F1', 'vs', '', 3], ['P1', 'F2', 'vs', '', 3], ['P6', 'F3', 'vs', '', 3], ['P6', 'F6', 'vs', '', 3], ['P5', 'F5', 'vs', '', 3]]
+    edges: [['P7', 'F1', 'vs', '', 2], ['P1', 'F2', 'vs', '', 2], ['P6', 'F3', 'vs', '', 2], ['P6', 'F6', 'vs', '', 2], ['P5', 'F5', 'vs', '', 2]]
   });
 
   SLIDES.push({
@@ -425,13 +453,13 @@
   /* ---------- KẾT ---------- */
   const CH = (code, name) => `<a data-go="${code}" class="chip">${name}</a>`;
   const col1 = [['M1', 'Một dữ kiện mở đầu'], ['A1', 'Trước Đổi mới'], ['A2', 'Đại hội VI'], ['A3', 'Ba mươi lăm năm đổi mới'], ['A4', 'Bảy chữ “dân”'], ['A5', 'Bốn nội dung'], ['A6', 'Hai hình thức'], ['A7', 'Thực tiễn'], ['A8', 'Trở ngại'], ['A9', 'Khái quát phần 1']];
-  const col2 = [['B1', 'Cương lĩnh'], ['B2', 'Qua các kỳ Đại hội'], ['B3', 'Đặc điểm 1–3'], ['B4', 'Đặc điểm 4–6'], ['B5', 'Đối chiếu quan niệm chung'], ['B6', 'Khái quát phần 2']];
+  const col2 = [['B0', 'Quan niệm chung'], ['B1', 'Cương lĩnh'], ['B2', 'Qua các kỳ Đại hội'], ['B3', 'Đặc điểm 1–3'], ['B4', 'Đặc điểm 4–6'], ['B5', 'Đối chiếu quan niệm chung'], ['B6', 'Khái quát phần 2']];
   const col3 = [['C1', 'Một là: kinh tế'], ['C2', 'Hai là, Ba là'], ['C3', 'Bốn là, Năm là'], ['C4', 'Ghép vai trò'], ['C5', 'b) Một là, Hai là'], ['C6', 'b) Ba là, Bốn là'], ['C7', 'Khái quát phần 3']];
   const chips = (h, a) => `<b class="ch">${h}</b>` + a.map(c => CH(c[0], c[1])).join('');
   const XC = [
     ['X1', 'Quyền lực thuộc về nhân dân', 'Bảy chữ “dân” → Hai hình thức · Đặc điểm 1–3 · Kết luận'],
     ['X2', 'Dân chủ gắn với pháp luật, kỷ cương', 'Ba mươi lăm năm đổi mới → Bốn nội dung · Thực tiễn · Đặc điểm 1–3 · Đối chiếu'],
-    ['X3', 'Phân công – phối hợp – kiểm soát quyền lực', 'Hai hình thức → Cương lĩnh · Các kỳ Đại hội · Đặc điểm 1–6 · Hoàn thiện Nhà nước'],
+    ['X3', 'Phân công – phối hợp – kiểm soát quyền lực', 'Hai hình thức → Quan niệm chung · Cương lĩnh · Các kỳ Đại hội · Đặc điểm 1–6 · Hoàn thiện Nhà nước'],
     ['X4', 'Dân biết, dân bàn, dân làm, dân kiểm tra', 'Thực tiễn → Đặc điểm 4–6 · Giám sát, phản biện · Kết luận'],
     ['X5', 'Kinh tế', 'Trở ngại → Một là: thể chế kinh tế'],
     ['X6', 'Dân trí', 'Trước Đổi mới → Nâng cao dân trí'],

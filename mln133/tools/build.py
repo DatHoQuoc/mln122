@@ -1,4 +1,6 @@
-import json, copy
+import json, copy, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from kich_ban import SCRIPT
 from pptx import Presentation
 from pptx.util import Emu, Pt
 from pptx.dml.color import RGBColor
@@ -89,6 +91,8 @@ def add_timing(slide, clicks):
            f'</p:childTnLst></p:cTn></p:par></p:tnLst></p:timing>')
     slide._element.append(etree.fromstring(xml))
 
+SCRIPT_BY = {x['id']: x for x in SCRIPT}
+PAGE = {}
 for d in D:
     sl = prs.slides.add_slide(blank)
     sl.background.fill.solid(); sl.background.fill.fore_color.rgb = rgb('F4E9D2')
@@ -140,6 +144,11 @@ for d in D:
     for n in d['nodes']:
         x, y, w, h, fs, t = n['x'], n['y'], n['w'], n['h'], n['fs'], n['type']
         ids = []
+        if t == 'hub' and n.get('phOnly'):
+            # trang tách (chưa tới đáp án): chỉ hiện ô dấu hỏi, không có hiệu ứng
+            s = shape(sl, MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, h, 'D9B9B0', 'C9A24B', 4, adj=[min(.25, 24 / min(w, h))])
+            write(s, [{'t': '?'}], 64, '8C2F2B', SANS, PP_ALIGN.CENTER, MSO_ANCHOR.MIDDLE, 0, 0, bold=True)
+            continue
         if t == 'hub':
             s = shape(sl, MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, h, '8C2F2B', 'C9A24B', 4, adj=[min(.25, 24 / min(w, h))])
             write(s, n['runs'], fs * 1.05, 'FFFFFF', SANS, PP_ALIGN.CENTER, MSO_ANCHOR.MIDDLE, 28, 20, bold=True)
@@ -210,7 +219,14 @@ for d in D:
     # các node / cạnh có step <= base hoặc cạnh có need < ... : giữ tĩnh
     # đặt các phần tử hiện ở bước <= base tĩnh (không có hiệu ứng)
     if clicks: add_timing(sl, clicks)
-    sl.notes_slide.notes_text_frame.text = f"{d['id']} · {len(clicks)} lần bấm (→) để hiện lần lượt: node phụ trước, hub sau cùng." if clicks else f"{d['id']} · không có hiệu ứng."
+    # ghi chú người nói: lấy từ kịch bản (slide tách 2 trang thì chia lời theo "split")
+    sc = SCRIPT_BY[d['rawid']]
+    k = PAGE.get(d['rawid'], 0); PAGE[d['rawid']] = k + 1
+    say = sc['say']
+    if 'split' in sc: say = say[:sc['split']] if k == 0 else say[sc['split']:]
+    note = [f"{sc['who']} · {sc['time']}", f"Thao tác: {sc['act']}", f"(Trang này: {len(clicks)} lần bấm)" if clicks else "(Trang này: không có hiệu ứng)", ''] + say
+    if sc.get('next') and ('split' not in sc or k > 0): note += ['', 'Chuyển ý: ' + sc['next']]
+    sl.notes_slide.notes_text_frame.text = '\n'.join(note)
 
 prs.save(__import__('os').environ.get('OUT','/home/user/mln122/mln133/MLN131_Chuong4_MucIII.pptx'))
 print('ok', len(D))
