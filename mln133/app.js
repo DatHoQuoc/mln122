@@ -17,7 +17,8 @@
     const xs = (n.x || []).map(x => `<a class="x" data-x="${x}" href="#K1">${x}</a>`).join('');
     const text = n.text.replace(/___/g, '<span class="blank"><b>dân</b></span>');
     const inner = n.type === 'hub' ? `<span class="q">?</span><div class="txt">${text}</div>` : `<div class="txt">${text}</div>`;
-    return `<div class="node t-${n.type}" data-id="${n.id}">${xs ? `<span class="xs">${xs}</span>` : ''}${inner}</div>`;
+    const who = n.who ? `<span class="who">${n.who}</span>` : '';
+    return `<div class="node t-${n.type}" data-id="${n.id}">${who}${xs ? `<span class="xs">${xs}</span>` : ''}${inner}</div>`;
   }
 
   function buildStage(sl) {
@@ -32,7 +33,7 @@
       </defs><g class="eg"></g></svg><div class="body"><div class="inner">`;
     if (sl.cover) h += `<div class="star">★</div><h1 class="cv">${sl.title}</h1><div class="orn"></div>`;
     sl.rows.forEach(r => {
-      h += '<div class="row">';
+      h += `<div class="row"${r.gap ? ` style="gap:${r.gap}px"` : ''}>`;
       r.cells.forEach((c, i) => {
         const cc = Array.isArray(c) ? { ids: c } : c;
         const w = (r.w || [])[i] || 1;
@@ -47,7 +48,7 @@
     // cạnh
     const g = st.querySelector('.eg'), NS = 'http://www.w3.org/2000/svg';
     st._edges = (sl.edges || []).map(e => {
-      const line = document.createElementNS(NS, 'line');
+      const line = document.createElementNS(NS, 'path');
       line.setAttribute('class', 'e e-' + e[2]); g.appendChild(line);
       let lab = null;
       if (e[3]) {
@@ -59,15 +60,22 @@
     return st;
   }
 
+  function applyVis(st, n) {
+    st._sl.nodes.forEach(nd => st._el[nd.id].classList.toggle('gone', !!((nd.u != null && n > nd.u) || (nd.late && n < nd.s))));
+    st.querySelectorAll('.cell').forEach(c => c.classList.toggle('empty', c.children.length > 0 && [...c.children].every(k => k.classList.contains('gone'))));
+  }
   function fit(st) {
-    st.classList.add('measure');
-    const body = st.querySelector('.body'), inner = st.querySelector('.inner');
-    let fs = 30;
-    for (; fs >= 14; fs--) {
+    const sl = st._sl, body = st.querySelector('.body'), inner = st.querySelector('.inner');
+    const dyn = sl.nodes.some(n => n.u != null || n.late);
+    const states = dyn ? Array.from({ length: maxStep(sl) + 1 }, (_, i) => i) : [null];
+    for (let fs = 30; fs >= 14; fs--) {
       st.style.setProperty('--fs', fs + 'px');
-      if (inner.offsetHeight <= body.clientHeight && inner.scrollWidth <= body.clientWidth + 24) break;
+      const ok = states.every(n => {
+        if (n !== null) applyVis(st, n);
+        return inner.offsetHeight <= body.clientHeight && inner.scrollWidth <= body.clientWidth + 24;
+      });
+      if (ok) break;
     }
-    st.classList.remove('measure');
   }
 
   function pos(st, id) {
@@ -87,14 +95,13 @@
       const el = st._el[nd.id];
       const shown = n >= (nd.s || 0) && !(nd.u != null && n > nd.u);
       el.classList.toggle('on', shown);
-      el.classList.toggle('gone', !!((nd.u != null && n > nd.u) || (nd.late && n < nd.s)));
       el.classList.toggle('alert-on', nd.alert != null && n >= nd.alert);
       if (nd.xcode) {
         el.classList.toggle('lit', hlc === nd.xcode);
         el.classList.toggle('dim', !!hlc && hlc !== nd.xcode);
       }
     });
-    st.querySelectorAll('.cell').forEach(c => c.classList.toggle('empty', [...c.children].every(k => k.classList.contains('gone'))));
+    applyVis(st, n);
     // cạnh
     const k = st.querySelector('.parts .cnt');
     k.textContent = `${idx[sl.id] + 1}/${SL.length} · bước ${n}/${maxStep(sl)}`;
@@ -102,40 +109,80 @@
       p.classList.toggle('on', sl.part === 4 || sl.part === i + 1);
       p.classList.toggle('done', sl.part !== 4 && sl.part > i + 1);
     });
-    st._edges.forEach(({ e, line, lab }) => {
-      let A = pos(st, e[0]), B = pos(st, e[1]);
+    // ---- định tuyến cạnh: đường gấp khúc vuông góc, các cạnh cùng đích dùng chung một "thanh dẫn" ----
+    const items = [];
+    st._edges.forEach(o => {
+      let e = o.e, A = pos(st, e[0]), B = pos(st, e[1]);
       const cellOf = st._el[e[0]] && st._el[e[0]].parentElement;
-      const grouped = e[2] === 'conv' && cellOf && cellOf.classList.contains('grid') && B;
-      if (grouped) {
-        const members = st._edges.filter(o => o.e[2] === 'conv' && o.e[1] === e[1] && st._el[o.e[0]] && st._el[o.e[0]].parentElement === cellOf);
-        if (members[0].line !== line) { line.classList.remove('on'); return; }
-        let x = 0, y = 0, q = cellOf; while (q && q !== st) { x += q.offsetLeft; y += q.offsetTop; q = q.offsetParent; }
-        A = { x, y, w: cellOf.offsetWidth, h: cellOf.offsetHeight, cx: x + cellOf.offsetWidth / 2, cy: y + cellOf.offsetHeight / 2 };
-        e = [e[0], e[1], e[2], e[3], Math.min(...members.map(o => Math.max(st._by[o.e[0]].s || 0)))];
+      if ((e[2] === 'conv' || e[2] === 'arrow') && cellOf && A && B && st._by[e[1]].type === 'hub' && cellOf !== st._el[e[1]].parentElement) {
+        const members = st._edges.filter(m => m.e[1] === e[1] && m.e[2] === e[2] && st._el[m.e[0]] && st._el[m.e[0]].parentElement === cellOf);
+        const vertical = !(A.x + A.w + 10 < B.x || B.x + B.w + 10 < A.x);
+        if (members.length > 1 && (cellOf.classList.contains('grid') || vertical)) {
+          if (members[0] !== o) { o.line.classList.remove('on'); return; }
+          let x = 0, y = 0, q = cellOf; while (q && q !== st) { x += q.offsetLeft; y += q.offsetTop; q = q.offsetParent; }
+          A = { x, y, w: cellOf.offsetWidth, h: cellOf.offsetHeight, cx: x + cellOf.offsetWidth / 2, cy: y + cellOf.offsetHeight / 2 };
+          e = [e[0], e[1], e[2], e[3], Math.min(...members.map(m => st._by[m.e[0]].s || 0))];
+        }
       }
-      if (!A || !B) { line.classList.remove('on'); if (lab) lab.classList.remove('on'); return; }
+      if (!A || !B) { o.line.classList.remove('on'); if (o.lab) o.lab.classList.remove('on'); return; }
       const na = st._by[e[0]], nb = st._by[e[1]];
       const need = e[4] != null ? e[4] : Math.max(na.s || 0, nb.type === 'hub' && e[2] !== 'arrow' ? 0 : nb.s || 0);
-      let x1, y1, x2, y2;
-      if (A.x + A.w + 10 < B.x) { x1 = A.x + A.w + 6; y1 = A.cy; x2 = B.x - 8; y2 = B.cy; }
-      else if (B.x + B.w + 10 < A.x) { x1 = A.x - 6; y1 = A.cy; x2 = B.x + B.w + 8; y2 = B.cy; }
-      else {
-        const dx = B.cx - A.cx, dy = B.cy - A.cy;
-        const ta = exit(A, dx, dy, 6), tb = exit(B, dx, dy, 8);
-        if (ta + tb >= 0.98) { line.classList.remove('on'); if (lab) lab.classList.remove('on'); return; }
-        x1 = A.cx + dx * ta; y1 = A.cy + dy * ta; x2 = B.cx - dx * tb; y2 = B.cy - dy * tb;
+      const side = A.x + A.w + 10 < B.x ? 'L' : B.x + B.w + 10 < A.x ? 'R' : A.cy < B.cy ? 'T' : 'B';
+      const shared = nb.type === 'hub' && (e[2] === 'conv' || e[2] === 'arrow');
+      items.push({ o, e, A, B, need, side, key: shared ? e[1] + side : null });
+    });
+    const groups = {};
+    items.forEach(it => { if (it.key) (groups[it.key] = groups[it.key] || []).push(it); });
+    let uniq = 0;
+    items.forEach(it => {
+      const { A, B, side } = it;
+      let bus;
+      if (it.key) {
+        const g = groups[it.key];
+        if (side === 'L') bus = Math.max(B.x - 36, Math.max(...g.map(i => i.A.x + i.A.w)) + 14);
+        else if (side === 'R') bus = Math.min(B.x + B.w + 36, Math.min(...g.map(i => i.A.x)) - 14);
+        else if (side === 'T') bus = Math.max(B.y - 24, Math.max(...g.map(i => i.A.y + i.A.h)) + 10);
+        else bus = Math.min(B.y + B.h + 24, Math.min(...g.map(i => i.A.y)) - 10);
+      } else {
+        const off = ((uniq++ % 5) - 2) * 12;
+        if (side === 'L') bus = (A.x + A.w + B.x) / 2 + off;
+        else if (side === 'R') bus = (B.x + B.w + A.x) / 2 + off;
+        else if (side === 'T') bus = (A.y + A.h + B.y) / 2;
+        else bus = (B.y + B.h + A.y) / 2;
       }
-      line.setAttribute('x1', x1); line.setAttribute('y1', y1); line.setAttribute('x2', x2); line.setAttribute('y2', y2);
-      const vis = n >= need;
-      line.classList.toggle('on', vis);
-      if (lab) {
-        const w = e[3].length * 9.5 + 22, mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
-        const r = lab.querySelector('rect'), t = lab.querySelector('text');
+      let pts;
+      if (side === 'L' || side === 'R') {
+        const sx = side === 'L' ? A.x + A.w + 4 : A.x - 4, ex = side === 'L' ? B.x - 7 : B.x + B.w + 7;
+        pts = Math.abs(A.cy - B.cy) < 4 ? [[sx, B.cy], [ex, B.cy]] : [[sx, A.cy], [bus, A.cy], [bus, B.cy], [ex, B.cy]];
+      } else {
+        const sy = side === 'T' ? A.y + A.h + 4 : A.y - 4, ey = side === 'T' ? B.y - 7 : B.y + B.h + 7;
+        pts = Math.abs(A.cx - B.cx) < 4 ? [[B.cx, sy], [B.cx, ey]] : [[A.cx, sy], [A.cx, bus], [B.cx, bus], [B.cx, ey]];
+      }
+      it.o.line.setAttribute('d', roundPath(pts, 14));
+      const vis = n >= it.need;
+      it.o.line.classList.toggle('on', vis);
+      if (it.o.lab) {
+        let bi = 0, bl = -1;
+        for (let i = 0; i < pts.length - 1; i++) { const l = Math.abs(pts[i + 1][0] - pts[i][0]) + Math.abs(pts[i + 1][1] - pts[i][1]); if (l > bl) { bl = l; bi = i; } }
+        const mx = (pts[bi][0] + pts[bi + 1][0]) / 2, my = (pts[bi][1] + pts[bi + 1][1]) / 2, lt = it.e[3], w = lt.length * 9.5 + 22;
+        if (bl < w + 24) { it.o.lab.classList.remove('on'); return; }
+        const r = it.o.lab.querySelector('rect'), t = it.o.lab.querySelector('text');
         r.setAttribute('x', mx - w / 2); r.setAttribute('y', my - 13); r.setAttribute('width', w);
         t.setAttribute('x', mx); t.setAttribute('y', my - 13);
-        lab.classList.toggle('on', vis);
+        it.o.lab.classList.toggle('on', vis);
       }
     });
+  }
+
+  function roundPath(p, r) {
+    let d = `M${p[0][0]} ${p[0][1]}`;
+    for (let i = 1; i < p.length - 1; i++) {
+      const [x0, y0] = p[i - 1], [x, y] = p[i], [x1, y1] = p[i + 1];
+      const l0 = Math.hypot(x - x0, y - y0), l1 = Math.hypot(x1 - x, y1 - y), k = Math.min(r, l0 / 2, l1 / 2);
+      d += ` L${x - (x - x0) / l0 * k} ${y - (y - y0) / l0 * k} Q${x} ${y} ${x + (x1 - x) / l1 * k} ${y + (y1 - y) / l1 * k}`;
+    }
+    const q = p[p.length - 1];
+    return d + ` L${q[0]} ${q[1]}`;
   }
 
   function scale(st) {
