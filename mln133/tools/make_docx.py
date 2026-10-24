@@ -22,7 +22,8 @@ def para(text, size=12, bold=False, italic=False, color=None, after=6):
 
 para('KỊCH BẢN THUYẾT TRÌNH THEO TỪNG SLIDE', 18, True, color=RED)
 para('MLN131 · Chương 4 · Mục III. Dân chủ xã hội chủ nghĩa và Nhà nước pháp quyền xã hội chủ nghĩa ở Việt Nam', 13, True)
-para('Lớp: [điền] · Nhóm: [điền] · Thành viên: [Họ tên – MSSV] × 4 · Tổng thời lượng khoảng 32–33 phút', 11, color=GREY)
+para('Nhóm 2 · Phan Thanh Đức (SE181719) · Hồ Trần Quân (SE180175) · Phan Văn Huy (SE184969) · Hồ Quốc Đạt (SE193114) · Nguyễn Thị Mai Vỹ (SE193020)', 11, color=GREY)
+para('Tổng thời lượng khoảng 32–33 phút. Nhóm tự chia người nói; mốc thời gian chỉ để canh nhịp.', 11, color=GREY)
 para('Cách dùng', 13, True, color=RED, after=2)
 for t in ['Đây là lời nói gợi ý, không cần thuộc từng chữ. Nắm ý rồi nói bằng giọng của mình; chỗ nào thấy gượng thì cứ đổi cho tự nhiên.',
           'Những câu trong ngoặc kép là trích nguyên văn từ giáo trình, văn kiện hoặc Hồ Chí Minh — giữ đúng câu chữ.',
@@ -35,7 +36,7 @@ doc.add_paragraph()
 
 for i, sc in enumerate(SCRIPT, 1):
     para(f"Slide {i} — {sc['title']}", 14, True, color=RED, after=2)
-    para(f"{sc['who']} · {sc['time']}", 11, True, color=GREY, after=2)
+    para(f"Thời gian gợi ý: {sc['time']}", 11, True, color=GREY, after=2)
     para('Thao tác: ' + sc['act'], 11, italic=True, color=GREY, after=4)
     for t in sc['say']:
         para(t, 12, after=6)
