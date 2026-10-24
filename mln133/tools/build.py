@@ -148,6 +148,10 @@ for d in D:
                 ph = shape(sl, MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, h, 'D9B9B0', 'C9A24B', 4, adj=[min(.25, 24 / min(w, h))])
                 write(ph, [{'t': '?'}], 64, '8C2F2B', SANS, PP_ALIGN.CENTER, MSO_ANCHOR.MIDDLE, 0, 0, bold=True)
                 placeholders.setdefault(n['s'], []).append(ph.shape_id)
+        elif t == 'head':
+            s = shape(sl, MSO_SHAPE.RECTANGLE, x, y, w, h, None, None)
+            write(s, n['runs'], fs * 1.0, '8C2F2B', SANS, anchor=MSO_ANCHOR.BOTTOM, ml=4, mt=4, bold=True)
+            shape(sl, MSO_SHAPE.RECTANGLE, x, y + h - 3, w, 3, 'C9A24B')
         elif t == 'quote':
             s = shape(sl, MSO_SHAPE.ROUNDED_RECTANGULAR_CALLOUT, x, y, w, h, 'FFF6DC', 'C9A24B', 2, adj=[-0.5 + 52 / w, 0.5 + 16 / h, .16])
             write(s, n['runs'], fs, '2B2622', SERIF, italic=True, ml=28, mt=18)
@@ -157,6 +161,11 @@ for d in D:
         elif t == 'ghost':
             s = shape(sl, MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, h, None, '1F3A5F', 2, dash_of('dash'), [.12])
             write(s, n['runs'], fs, '1F3A5F', SANS)
+            if n.get('alertStep'):
+                ov = shape(sl, MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, h, 'FBE3DF', 'D33A2C', 3, dash_of('dash'), [.12])
+                write(ov, n['runs'], fs, 'D33A2C', SANS, bold=True)
+                for r in ov.text_frame.paragraphs[0].runs: r.font.color.rgb = rgb('D33A2C')
+                node_ids.setdefault(n['alertStep'], []).append(ov.shape_id)
             for r in s.text_frame.paragraphs[0].runs:
                 if r.font.color.rgb == rgb('8C2F2B'): r.font.color.rgb = rgb('1F3A5F')
         elif t == 'chips':

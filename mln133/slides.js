@@ -272,19 +272,21 @@
       D('P5', 'Pháp luật nghiêm minh', 2),
       D('P6', 'Cơ quan nhà nước phân công, phối hợp, kiểm soát lẫn nhau', 2),
       D('P7', 'Tất cả vì mục tiêu phục vụ nhân dân', 2),
-      O('o1', 'Đặc điểm nào KHÔNG có cặp?', 4)
+      N('hF', 'head', 'Sáu đặc điểm của Nhà nước pháp quyền XHCN Việt Nam', 1),
+      N('hP', 'head', 'Quan niệm chung về nhà nước pháp quyền', 1),
+      O('o1', 'Đặc điểm 4 (Đảng lãnh đạo) không có cặp → đây là điểm khác biệt của Nhà nước pháp quyền XHCN Việt Nam', 4)
     ],
-    rows: [R([['F1', 'F2', 'F3', 'F4', 'F5', 'F6'], ['P7', 'P1', 'P6', 'P5', 'P2', 'P3', 'P4']], [1.5, 2.6], 150), R([['o1']])],
+    rows: [R([['hF'], ['hP']], [1.5, 2.6], 150), R([['F1', 'F2', 'F3', 'F4', 'F5', 'F6'], ['P7', 'P1', 'P6', 'P5', 'P2', 'P3', 'P4']], [1.5, 2.6], 150), R([['o1']])],
     edges: [['P7', 'F1', 'vs', '', 3], ['P1', 'F2', 'vs', '', 3], ['P6', 'F3', 'vs', '', 3], ['P6', 'F6', 'vs', '', 3], ['P5', 'F5', 'vs', '', 3]]
   });
 
   SLIDES.push({
     id: 'B6', part: 2, title: 'Phần 2 — Nhà nước pháp quyền XHCN Việt Nam',
     nodes: [
-      D('V1', '<b>Phần CHUNG:</b> các tinh thần cơ bản của nhà nước pháp quyền nói chung (những cặp khớp vừa nối)', 1),
-      G('g1', 'Đặc điểm “Đảng Cộng sản Việt Nam lãnh đạo” không có cặp trong quan niệm chung', 2),
-      D('V2', '<b>Phần KHÁC ①:</b> mang BẢN CHẤT GIAI CẤP CÔNG NHÂN, phục vụ lợi ích nhân dân', 3),
-      D('V3', '<b>Phần KHÁC ②:</b> công cụ chủ yếu để Đảng Cộng sản Việt Nam định hướng đi lên CNXH', 4),
+      D('V1', '<b>Điểm CHUNG</b> với nhà nước pháp quyền nói chung: thượng tôn pháp luật, pháp luật nghiêm minh, phân công – phối hợp – kiểm soát quyền lực, tất cả vì phục vụ nhân dân', 1),
+      G('g1', 'Đặc điểm 4 (Đảng Cộng sản Việt Nam lãnh đạo) không có cặp trong quan niệm chung', 2),
+      D('V2', '<b>Điểm KHÁC thứ nhất:</b> Nhà nước mang BẢN CHẤT GIAI CẤP CÔNG NHÂN, phục vụ lợi ích của nhân dân', 3),
+      D('V3', '<b>Điểm KHÁC thứ hai:</b> Nhà nước là công cụ chủ yếu để Đảng Cộng sản Việt Nam định hướng đi lên chủ nghĩa xã hội', 4),
       H('HUB', 'Vừa thể hiện tinh thần chung của nhà nước pháp quyền, vừa có sự khác biệt', 5)
     ],
     rows: [R([['V1'], ['V2'], ['g1', 'V3']]), R([['HUB']])],
